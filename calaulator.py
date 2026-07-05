@@ -3,7 +3,7 @@ def settle_single_handicap(goal_diff, line, stake, odds):
     goal_diff: 你买的球队净胜球
     line: 盘口，例如 -2, -1.75, -0.5, 0.25
     stake: 本金
-    odds: 十进制赔率，例如 1.90
+    odds: 亚洲盘净盈利赔率，例如 1.0 表示赢得 1 倍本金
 
     返回：盈利，不包含本金
     """
@@ -11,7 +11,7 @@ def settle_single_handicap(goal_diff, line, stake, odds):
     result = goal_diff + line
 
     if result > 0:
-        return stake * (odds - 1)
+        return stake * odds
     elif result == 0:
         return 0
     else:
@@ -65,7 +65,7 @@ def calculate_total_profit(actual_home, actual_away, bets):
            "team": "home" 或 "away",
            "line": -1.75,
            "stake": 100,
-           "odds": 1.9
+           "odds": 1.0
        }
 
     2. 波胆：
@@ -151,7 +151,7 @@ if __name__ == "__main__":
             "team": "home",
             "line": -1.75,
             "stake": 100,
-            "odds": 1.9
+            "odds": 1.0
         },
         {
             "type": "correct_score",
