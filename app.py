@@ -2,7 +2,6 @@ import copy
 import re
 from typing import Any
 
-import altair as alt
 import pandas as pd
 import streamlit as st
 
@@ -735,27 +734,8 @@ def render_strategy_compare() -> None:
     strategy_count = len(saved_strategies)
     chart_height = min(520, 320 + strategy_count * 40)
 
-    chart_df = comparison_df.melt(
-        id_vars="score",
-        var_name="方案",
-        value_name="收益金额",
-    )
-    chart = (
-        alt.Chart(chart_df)
-        .mark_line(point=True)
-        .encode(
-            x=alt.X("score:N", title="比分", sort=None),
-            y=alt.Y("收益金额:Q", title="收益金额"),
-            color=alt.Color("方案:N", title="方案"),
-            tooltip=[
-                alt.Tooltip("score:N", title="比分"),
-                alt.Tooltip("方案:N", title="方案"),
-                alt.Tooltip("收益金额:Q", title="收益金额", format=",.2f"),
-            ],
-        )
-        .properties(height=chart_height)
-    )
-    st.altair_chart(chart, width="stretch")
+    chart_data = comparison_df.set_index("score")
+    st.line_chart(chart_data, height=chart_height)
 
 
 # ============================================================
